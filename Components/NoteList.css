@@ -1,5 +1,8 @@
 .noteGrid
 {
     display:flex;
+    flex-wrap: wrap;
+    /* align-items: flex-start;  */
     gap:15px;
+    align-items:stretch;
 }

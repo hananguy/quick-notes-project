@@ -6,8 +6,8 @@ export default function Notes() {
   const [notes, setNotes] = useState([]);
     const noteIndex = useRef(0);
 
-    const addNote = (text) => {
-    const newNote = { idx: noteIndex.current, text, date: new Date().toLocaleString() };
+    const addNote = (text, title) => {
+    const newNote = { idx: noteIndex.current, title, text, date: new Date().toLocaleString() };
     noteIndex.current+=1;
     setNotes([newNote, ...notes]);
     };

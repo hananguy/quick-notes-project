@@ -11,13 +11,14 @@ export default function NoteForm({onAddNote})
     }
 
     const updateTitle = (event) =>{
-    setText(event.target.value)
+    setTitle(event.target.value)
     }
 
     const handleAdd = () => {
     if (text.trim() === "") return;
-    onAddNote(text); 
+    onAddNote(text, title); 
     setText("");
+    setTitle("")
     }
 
 

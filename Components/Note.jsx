@@ -1,7 +1,7 @@
 import React from "react";
 import './Note.css';
 
-export default function Note({ idx, text, date, handleDeleteNote}) {
+export default function Note({ idx, title, text, date, handleDeleteNote}) {
 
  const formattedDate = new Date(date).toLocaleString("en-US", {
     month:  "short",   
@@ -19,10 +19,11 @@ export default function Note({ idx, text, date, handleDeleteNote}) {
          } 
   }
   return (
-    <div key={idx} className="note">
-        <div>
+    <div key={idx} className="note-container">
+        <div className="note">
             <strong>{formattedDate}</strong>
-            <p>{text}</p>
+            <p class="title">{title}</p>
+            <p class="text">{text}</p>
         </div>
         <button className="btn" onClick={handleClick}>X</button>
       
