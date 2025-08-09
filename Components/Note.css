@@ -1,0 +1,16 @@
+.note
+{
+    border: 2px solid black;
+    display: flex;
+    padding:13px;
+    height: 70px;
+    border-radius: 6px;
+}
+.btn
+{
+    background-color: white;
+    padding-bottom: 80%; 
+    padding-left: 10px;
+    border: none;
+    font-size:large
+}
