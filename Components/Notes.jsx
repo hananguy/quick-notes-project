@@ -1,9 +1,8 @@
-import React, { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import NoteForm from "./NoteForm";
 import NoteList from "./NoteList";
-import './Notes.css'
-import Modal from "react-modal";
 import NoteModal from './NoteModal';
+import './Notes.css';
 
 export default function Notes() {
     const [notes, setNotes] = useState([]);
@@ -27,11 +26,16 @@ export default function Notes() {
         setNotes(newNotes);
     };
 
-    const updateNote = (idx, updates) => {
-        const stamp = new Date().toLocaleString();
-        setNotes(notes =>notes.map(n => n.idx === idx ? { ...n, ...updates, updatedAt: stamp } : n));
-    
-        (prev =>prev && prev.idx === idx ? { ...prev, ...updates, updatedAt: stamp } : prev);
+const handleUpdateNote = (noteObj, updates) => {
+  const stamp = new Date().toLocaleString();
+
+  setNotes(prev =>
+    prev.map(n => (n === noteObj ? { ...n, ...updates, updatedAt: stamp } : n))
+  );
+
+  setSelectedNote(curr =>
+    curr ? { ...curr, ...updates, updatedAt: stamp } : curr
+  );
 };
 
 
@@ -39,7 +43,7 @@ return (
     <div className="container">
       <NoteForm onAddNote={addNote} />
       <NoteList notes={notes} onDeleteNote={deleteNote} onSelectedNote={handleSelectNote}/>
-      <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)}/>
+      <NoteModal note={selectedNote} onClose={() => setSelectedNote(null)} onUpdate={handleUpdateNote}/>
     </div>
   );
 }

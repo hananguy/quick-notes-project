@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
 import "./NoteModal.css";
 
-export default function NoteModal({ note, onClose }) {
+export default function NoteModal({ note, onClose, onUpdate }) {
+    let isOpen;
+    if (note) {
+    isOpen = true;
+    } else {
+    isOpen = false;
+    }
 
-    const [isEditingTitle, setIsEditingTitle] = useState(false);
-    const [isEditingText,  setIsEditingText]  = useState(false);
-    const [title, setTitle] = useState("");
-    const [text,  setText]  = useState("");
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [isEditingText, setIsEditingText] = useState(false);
+  const [title, setTitle] = useState("");
+  const [text, setText] = useState("");
 
-    useEffect(() => {
+  useEffect(() => {
     if (note) {
       setTitle(note.title || "");
       setText(note.text || "");
@@ -20,43 +26,88 @@ export default function NoteModal({ note, onClose }) {
 
   const handleSave = () => {
     if (!note) return;
-    
+    onUpdate?.(note, { title, text });
     setIsEditingTitle(false);
     setIsEditingText(false);
   };
-
-  const handleCancel = () => {
-    if (!note) return;
-    setTitle(note.title || "");
-    setText(note.text || "");
-    setIsEditingTitle(false);
-    setIsEditingText(false);
-  };
-
-
-
-  const isOpen = !!note;
-
+  console.log(title);
   return (
     <Modal
       isOpen={isOpen}
-      onRequestClose={onClose}         
-      overlayClassName="modal-overlay"
-      className="modal"
+      onRequestClose={onClose}
+      overlayClassName="note-modal__overlay"
+      className="note-modal"
       contentLabel="Note details"
     >
       {note && (
-        <div className="note-modal-content">
-          <div className="note-header">
-            <strong>{note.date}</strong>
-            <button className="btn" onClick={onClose}>×</button>
+        <div className="note-modal__content">
+          <div className="note-modal__header">
+            <strong className="note-modal__date">{note.date}</strong>
+            <button
+              type="button"
+              className="note-modal__icon-btn"
+              onClick={onClose}
+              aria-label="Close"
+            >
+              ×
+            </button>
           </div>
 
-          {note.title && <h3 className="title">{note.title}</h3>}
-          <p className="text">{note.text}</p>
+          {isEditingTitle ? (
+            <input
+              className="note-modal__title-input"
+              autoFocus
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              onBlur={() => setIsEditingTitle(false)}
+              onKeyDown={(e) => e.key === "Enter" && setIsEditingTitle(false)}
+              placeholder="Title…"
+            />
+          ) : (
+            <h3
+              className="note-modal__title"
+              onDoubleClick={() => setIsEditingTitle(true)}
+            >
+              {note.title || "(No title)"}
+            </h3>
+          )}
 
-       
-          {/* {note.updatedAt && <small className="muted">Updated: {note.updatedAt}</small>} */}
+          {isEditingText ? (
+            <textarea
+              className="note-modal__text-input"
+              autoFocus
+              rows={6}
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.ctrlKey && e.key === "Enter") handleSave();
+              }}
+              placeholder="Write your note…"
+            />
+          ) : (
+            <p
+              className="note-modal__text"
+              onDoubleClick={() => setIsEditingText(true)}
+            >
+              {note.text}
+            </p>
+          )}
+
+          {note.updatedAt && (
+            <small className="note-modal__muted">
+              Updated: {note.updatedAt}
+            </small>
+          )}
+
+          <div className="note-modal__actions">
+            <button
+              type="button"
+              className="note-modal__primary-btn"
+              onClick={handleSave}
+            >
+              Update
+            </button>
+          </div>
         </div>
       )}
     </Modal>

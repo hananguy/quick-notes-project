@@ -1,5 +1,4 @@
-/* רקע המודאל */
-.modal-overlay{
+.note-modal__overlay{
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.35);
@@ -9,36 +8,37 @@
   z-index: 1000;
 }
 
-.modal{
+.note-modal{
   inset: unset !important;
   padding: 0 !important;
-
-  position: relative;
   width: min(560px, 90vw);
   max-height: 80vh;
-  overflow: auto;
-
   background: #fff;
   border: 2px solid #000;
   border-radius: 8px;
+  overflow: auto;
   box-sizing: border-box;
-  padding: 16px; 
+  outline: none;
 }
 
-.note-modal-content{
+.note-modal__content{
   display: flex;
   flex-direction: column;
   gap: 10px;
+  padding: 16px;
+  min-height: 240px;
 }
 
-.note-header{
+.note-modal__header{
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 6px;
 }
 
-.btn{
+.note-modal__date{ font-weight: 700; }
+
+.note-modal__icon-btn{
   width: 24px;
   height: 24px;
   padding: 0;
@@ -52,18 +52,43 @@
   border-radius: 2px;
 }
 
-.title{
-  margin: 0;
-  font-size: 22px;
-  font-weight: 900;
+.note-modal__title{ margin: 0; font-size: 22px; font-weight: 900; }
+.note-modal__text{ margin: 0; white-space: pre-wrap; line-height: 1.4; }
+
+.note-modal__title-input{
+  width: 100%;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 6px 8px;
+  border: 3px solid blue;
+  border-radius: 4px;
+  outline: none;
 }
 
-.text{
-  margin: 0;
-  white-space: pre-wrap; 
-  line-height: 1.4;
+.note-modal__text-input{
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 3px solid blue;
 }
 
-.muted{
-  color: #666;
+.note-modal__muted{ color: #666; }
+
+.note-modal__actions{
+  margin-top: auto;
+  display: flex;
+  justify-content: center;
+  padding-top: 12px;
+}
+
+.note-modal__primary-btn{
+  min-width: 220px;
+  height: 36px;
+  padding: 0 12px;
+  border: 1px solid #000;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
 }
