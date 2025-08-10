@@ -6,3 +6,34 @@
     margin:auto;
     gap:20px;
 }
+.modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal{
+  position: relative;               /* כדי שאם תרצה absolute בפנים, יעוגן למודאל */
+  width: min(560px, 90vw);
+  max-height: 80vh;
+  background: #fff;
+  border: 2px solid #000;
+  border-radius: 8px;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.note-header{
+  display: flex;
+  justify-content: space-between;   /* תאריך משמאל, X מימין */
+  align-items: center;
+}
+
+.btn{
+  width: 24px; height: 24px; padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid #000; background: #fff; cursor: pointer; line-height: 1;
+}

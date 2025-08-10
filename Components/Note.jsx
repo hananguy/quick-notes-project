@@ -1,7 +1,7 @@
 import React from "react";
 import './Note.css';
 
-export default function Note({ idx, title, text, date, handleDeleteNote}) {
+export default function Note({ idx, note, title, text, date, handleDeleteNote, handleSelectedNote}) {
 
  const formattedDate = new Date(date).toLocaleString("en-US", {
     month:  "short",   
@@ -10,22 +10,28 @@ export default function Note({ idx, title, text, date, handleDeleteNote}) {
     minute: "numeric"  
   });
 
-
-  const handleClick = () =>
+  const handleNoteSelect = () =>
   {
-      const ok = window.confirm("Are you sure you want to delete this note?");
-         if (ok) {
-        handleDeleteNote(idx);
-         } 
+    handleSelectedNote(note);
+  }
+  const handleDeleteClick = (e) =>
+  {
+    e.stopPropagation(); 
+    const ok = window.confirm("Are you sure you want to delete this note?");
+    if (ok) {
+    handleDeleteNote(idx);
+    } 
+
+    
   }
   return (
-    <div key={idx} className="note-container">
+    <div key={idx} className="note-container" onClick={handleNoteSelect}>
         <div className="note">
             <strong>{formattedDate}</strong>
             <p class="title">{title}</p>
             <p class="text">{text}</p>
         </div>
-        <button className="btn" onClick={handleClick}>X</button>
+        <button className="btn" onClick={handleDeleteClick}>X</button>
       
     </div>
   );
